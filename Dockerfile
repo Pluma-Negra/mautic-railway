@@ -1,5 +1,10 @@
 FROM mautic/mautic:latest
 
+# MPM
+RUN a2dismod mpm_event mpm_worker \
+    && a2enmod mpm_prefork \
+    && apache2ctl -t
+
 ARG MAUTIC_DB_HOST
 ARG MAUTIC_DB_PORT
 ARG MAUTIC_DB_USER
