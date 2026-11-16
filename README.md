@@ -2,6 +2,8 @@
 
 Deploy **Mautic** on Railway. A free and open-source marketing automation platform for managing contacts, building campaigns, and nurturing leads.
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/AGR0CM?referralCode=zlMKVb&utm_medium=integration&utm_source=template&utm_campaign=generic)
+
 ## What is Mautic?
 
 Mautic is an open-source marketing automation platform that helps businesses manage contacts, send personalized emails, track engagement, and automate customer journeys while maintaining control over their data.
