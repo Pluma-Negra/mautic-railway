@@ -3,27 +3,6 @@ FROM mautic/mautic:latest
 ENV DOCKER_MAUTIC_ROLE=mautic_web \
     PHP_INI_VALUE_DATE_TIMEZONE=UTC
 
-ARG MAUTIC_DB_HOST
-ARG MAUTIC_DB_PORT
-ARG MAUTIC_DB_USER
-ARG MAUTIC_DB_PASSWORD
-ARG MAUTIC_DB_NAME
-ARG MAUTIC_TRUSTED_PROXIES
-ARG MAUTIC_URL
-ARG MAUTIC_ADMIN_EMAIL
-ARG MAUTIC_ADMIN_PASSWORD
-
-ENV MAUTIC_DB_HOST=$MAUTIC_DB_HOST
-ENV MAUTIC_DB_PORT=$MAUTIC_DB_PORT
-ENV MAUTIC_DB_USER=$MAUTIC_DB_USER
-ENV MAUTIC_DB_PASSWORD=$MAUTIC_DB_PASSWORD
-ENV MAUTIC_DB_NAME=$MAUTIC_DB_NAME
-ENV MAUTIC_TRUSTED_PROXIES=$MAUTIC_TRUSTED_PROXIES
-ENV MAUTIC_URL=$MAUTIC_URL
-ENV MAUTIC_ADMIN_EMAIL=$MAUTIC_ADMIN_EMAIL
-ENV MAUTIC_ADMIN_PASSWORD=$MAUTIC_ADMIN_PASSWORD
-ENV PHP_INI_DATE_TIMEZONE='UTC'
-
 # Conservar el lanzador original de Apache
 RUN mv /usr/local/bin/apache2-foreground \
        /usr/local/bin/apache2-foreground-original
@@ -34,4 +13,8 @@ COPY apache-start.sh /usr/local/bin/apache2-foreground
 RUN sed -i 's/\r$//' /usr/local/bin/apache2-foreground \
     && chmod +x /usr/local/bin/apache2-foreground
 
-# Se conserva el ENTRYPOINT oficial de Mautic
+COPY docker-entrypoint.sh /usr/local/bin/railway-mautic-start
+RUN sed -i 's/\r$//' /usr/local/bin/railway-mautic-start \
+    && chmod 755 /usr/local/bin/railway-mautic-start \
+    && test -x /entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/railway-mautic-start"]
