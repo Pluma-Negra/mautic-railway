@@ -47,6 +47,18 @@ For installation, configuration, and usage, visit the
 For container deployment details, see the
 [official Mautic Docker repository](https://github.com/mautic/docker-mautic).
 
+
+## Recovering after a Railway redeploy
+If Mautic displays *“The site is currently offline”* after a redeploy, try rebuilding the production cache. Run these commands in the **Mautic** service terminal:
+
+```bash
+cd /var/www/html
+su -s /bin/sh www-data -c 'php bin/console cache:clear --env=prod -vv'
+```
+
+This rebuilds the cache as the Apache user (`www-data`). Once the command finishes, reload `/s/login` and verify that you can sign in. If the error persists, check the service’s **Deploy Logs** in Railway.
+
+
 ---
 
 **</> with ♥ by [Pluma Negra](https://plumanegra.com.mx)**
